@@ -14,6 +14,23 @@ import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
 import MenuBuilder from './menu';
 import { resolveHtmlPath } from './util';
+import { exec } from 'child_process';
+
+import express from 'express';
+import cors from 'cors';
+
+const server = express();
+const port = 3000;
+
+server.use(cors());
+server.get('/', (req, res) => {
+  console.log('Something Happening!');
+  res.status(200).send('Hello World!');
+});
+
+server.listen(port, () => {
+  console.log(`Server listening at http://localhost:${port}`);
+});
 
 class AppUpdater {
   constructor() {
@@ -135,3 +152,4 @@ app
     });
   })
   .catch(console.log);
+
